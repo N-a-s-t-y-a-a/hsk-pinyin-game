@@ -2,152 +2,170 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>HSK Pinyin — маджонг | адаптивный дизайн</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>HSK Pinyin — тёмная тема | маджонг-стопки</title>
     <style>
         * {
             box-sizing: border-box;
-            user-select: none; /* для мобильных лучше оставить, но поле ввода работает */
+            user-select: none;
         }
+
         body {
             margin: 0;
             min-height: 100vh;
-            background: linear-gradient(135deg, #e0f0e8 0%, #c8e0d4 100%);
+            background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
             font-family: 'Segoe UI', 'Noto Sans CJK SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 12px;
+            padding: 16px;
         }
+
+        /* основной контейнер */
         .app-container {
             width: 1300px;
             max-width: 100%;
-            background: white;
+            background: rgba(18, 25, 45, 0.85);
+            backdrop-filter: blur(8px);
             border-radius: 48px;
-            box-shadow: 0 20px 35px rgba(100, 120, 100, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(72, 187, 120, 0.2);
             overflow: hidden;
         }
+
+        /* вкладки */
         .tabs {
             display: flex;
-            background: #d9e6db;
+            background: #0f1422;
             gap: 4px;
             padding: 12px 16px 0 16px;
             flex-wrap: wrap;
         }
         .tab-btn {
-            background: #c0d6c4;
+            background: #1e2a3a;
             border: none;
-            padding: 8px 16px;
-            font-size: 0.9rem;
+            padding: 10px 20px;
+            font-size: 0.95rem;
             font-weight: bold;
-            color: #3a5a4a;
-            border-radius: 20px 20px 0 0;
+            color: #a0b8d0;
+            border-radius: 28px 28px 0 0;
             cursor: pointer;
             transition: 0.2s;
-            flex: 1 0 auto;
-            text-align: center;
         }
         .tab-btn.active {
-            background: white;
-            color: #2c7a5e;
+            background: #0f172a;
+            color: #6ee7b7;
+            box-shadow: 0 -2px 0 #6ee7b7;
         }
+
         .tab-content {
             display: none;
             padding: 20px;
-            background: white;
+            background: #0f172a;
+            min-height: 600px;
         }
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content.active { display: block; }
+
+        /* форма входа */
         .auth-panel {
-            max-width: 400px;
-            margin: 20px auto;
-            background: #fefef7;
-            padding: 24px;
-            border-radius: 40px;
-            border: 1px solid #cfe3d4;
+            max-width: 450px;
+            margin: 30px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 48px;
+            border: 1px solid #334155;
+        }
+        .auth-panel h2 {
+            color: #e2e8f0;
+            text-align: center;
         }
         .auth-panel input {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border: 2px solid #bbd5c4;
+            padding: 14px;
+            margin: 12px 0;
+            border: 2px solid #334155;
             border-radius: 60px;
             font-size: 1rem;
+            background: #0f172a;
+            color: #f1f5f9;
         }
+
+        /* кнопки */
         .btn {
-            background: #7fb0a0;
+            background: #2dd4bf;
             border: none;
-            padding: 8px 18px;
+            padding: 10px 20px;
             border-radius: 40px;
-            color: white;
+            color: #0f172a;
             font-weight: bold;
             cursor: pointer;
-            font-size: 0.85rem;
             transition: 0.2s;
             margin: 5px;
         }
-        .btn:hover { background: #5e8f7e; }
-        .btn-danger { background: #d9a7a7; color: #4a2a2a; }
-        .btn-warning { background: #c2d6a5; color: #3a5a2a; }
+        .btn:hover { background: #14b8a6; transform: scale(0.97);}
+        .btn-danger { background: #f87171; color: #1e1e2a; }
+        .btn-warning { background: #fbbf24; color: #1e1e2a; }
+
+        /* игровая зона */
         .game-area {
-            background: #f9fffbf0;
-            border-radius: 40px;
+            background: #0f172a;
+            border-radius: 48px;
             padding: 16px;
         }
         .sentence-row {
-            background: #f1f9f0;
-            padding: 16px;
-            border-radius: 32px;
-            font-size: 1.2rem;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 40px;
+            font-size: 1.4rem;
             line-height: 1.4;
             text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid #cfe2cf;
-            color: #2d4a3a;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            border: 1px solid #334155;
+            color: #e2e8f0;
             word-break: break-word;
         }
-        /* общие контейнеры */
+
+        /* сетка для обычного режима */
         .mahjong-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 12px;
-            margin: 16px 0;
+            margin: 20px 0;
             padding: 16px;
-            background: #eef5ea;
+            background: #0a0f1e;
             border-radius: 48px;
-            min-height: 250px;
+            min-height: 280px;
         }
-        /* обычный режим (плитки сеткой) */
         .tile {
-            background: white;
-            width: 80px;
-            height: 96px;
+            background: #1e293b;
+            width: 90px;
+            height: 110px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: bold;
-            box-shadow: 0 6px 0 #b8cfb0;
+            box-shadow: 0 8px 0 #0f172a;
             cursor: pointer;
-            border: 1px solid #d4e6cc;
-            color: #3c6e54;
+            border: 1px solid #2dd4bf;
+            color: #f1f5f9;
+            transition: 0.05s linear;
         }
         .tile.removed {
             visibility: hidden;
             pointer-events: none;
         }
-        /* режим стопок (адаптивный) */
+
+        /* режим стопок (маджонг) */
         .mahjong-grid.stack-mode {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
-            background: #eef5ea;
-            min-height: 300px;
+            gap: 30px;
+            background: #0a0f1e;
+            min-height: 400px;
         }
         .stack-col {
             display: flex;
@@ -157,168 +175,163 @@
         }
         .stack-tile {
             position: relative;
-            width: 80px;
-            height: 96px;
-            background: white;
+            width: 85px;
+            height: 105px;
+            background: #1e293b;
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            border: 2px solid #caddc0;
-            margin-bottom: -60px; /* наложение */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            border: 1px solid #2dd4bf;
+            margin-bottom: -65px;
             transition: 0.1s;
+            color: #f1f5f9;
         }
-        .stack-tile:last-child {
-            margin-bottom: 0;
-        }
+        .stack-tile:last-child { margin-bottom: 0; }
         .stack-tile.blocked {
-            background: #b8b8a8;
+            background: #2d3a4e;
             filter: grayscale(0.5);
-            border: 2px solid #8a8a7a;
-            color: #4a4a3a;
+            border-color: #4a5a72;
+            color: #94a3b8;
             cursor: not-allowed;
         }
         .stack-tile:not(.blocked) {
-            background: #fff8e7;
-            border: 3px solid #7fb0a0;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            background: #2dd4bf20;
+            border: 2px solid #2dd4bf;
+            box-shadow: 0 0 12px rgba(45,212,191,0.3);
             cursor: pointer;
             z-index: 10;
         }
-        .stack-tile.removed {
-            display: none;
-        }
+        .stack-tile.removed { display: none; }
+
         /* информационная панель */
         .info-panel {
-            background: #e5f0e0;
-            border-radius: 32px;
-            padding: 10px 16px;
+            background: #1e293b;
+            border-radius: 40px;
+            padding: 12px 20px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-            font-size: 0.85rem;
+            gap: 12px;
+            margin-bottom: 20px;
+            color: #cbd5e1;
         }
         .timer {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
             font-family: monospace;
-            background: #ffffffcc;
-            padding: 2px 12px;
-            border-radius: 40px;
-            color: #4c8b6e;
+            background: #0f172a;
+            padding: 4px 16px;
+            border-radius: 60px;
+            color: #6ee7b7;
         }
+
         /* модальные окна */
-        .pause-overlay, .choice-dialog, .modal {
+        .modal, .pause-overlay, .choice-dialog {
             position: fixed;
             top:0; left:0; width:100%; height:100%;
-            background: rgba(230, 245, 230, 0.96);
-            backdrop-filter: blur(6px);
+            background: rgba(10, 15, 30, 0.95);
+            backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
-        .pause-card, .choice-card, .modal-content {
-            background: white;
-            padding: 24px;
+        .modal-content, .pause-card, .choice-card {
+            background: #1e293b;
+            padding: 30px;
             border-radius: 48px;
             text-align: center;
-            max-width: 90vw;
-            width: 340px;
+            min-width: 280px;
+            border: 1px solid #2dd4bf;
+            color: #e2e8f0;
         }
         .modal-content input {
             font-size: 1.4rem;
             padding: 12px;
-            margin: 15px 0;
+            margin: 16px 0;
             width: 90%;
             border-radius: 60px;
-            border: 2px solid #bddab2;
+            border: 2px solid #2dd4bf;
+            background: #0f172a;
+            color: white;
             text-align: center;
         }
         .hidden { display: none; }
+
+        /* меню выбора уровня */
         .level-card {
-            background: white;
+            background: #1e293b;
             border-radius: 40px;
             padding: 20px;
             width: 180px;
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(100,120,100,0.1);
-            margin: 8px;
+            border: 1px solid #334155;
+            transition: 0.2s;
+            color: #e2e8f0;
         }
+        .level-card:hover { border-color: #2dd4bf; transform: translateY(-4px);}
         .submenu {
-            margin-top: 16px;
-            background: #f5fbf2;
-            border-radius: 32px;
-            padding: 16px;
-            max-height: 60vh;
+            background: #0f172a;
+            border-radius: 40px;
+            padding: 20px;
+            max-height: 500px;
             overflow-y: auto;
         }
         .game-list-item {
-            background: white;
+            background: #1e293b;
             margin: 8px;
-            padding: 10px;
-            border-radius: 28px;
+            padding: 12px;
+            border-radius: 32px;
             display: flex;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 6px;
+            color: #cbd5e1;
         }
         .mode-selector {
             display: flex;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 16px;
-            background: #eef3ea;
-            padding: 8px;
-            border-radius: 48px;
-            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 60px;
+            color: #e2e8f0;
         }
-        /* адаптация для планшетов и телефонов */
-        @media (max-width: 680px) {
-            .tile, .stack-tile {
-                width: 65px;
-                height: 78px;
-                font-size: 1.6rem;
-            }
-            .stack-tile {
-                margin-bottom: -48px;
-            }
-            .sentence-row {
-                font-size: 1rem;
-            }
-            .tab-btn {
-                font-size: 0.75rem;
-                padding: 6px 12px;
-            }
-            .btn {
-                padding: 6px 14px;
-                font-size: 0.75rem;
-            }
-            .info-panel {
-                font-size: 0.75rem;
-            }
-            .timer {
-                font-size: 1rem;
-            }
+
+        /* адаптив под мобильные */
+        @media (max-width: 700px) {
+            body { padding: 8px; }
+            .app-container { border-radius: 32px; }
+            .tabs { padding: 8px 8px 0 8px; }
+            .tab-btn { padding: 8px 12px; font-size: 0.8rem; }
+            .tab-content { padding: 12px; }
+            .sentence-row { font-size: 1.1rem; padding: 12px; letter-spacing: 1px; }
+            .tile { width: 70px; height: 90px; font-size: 1.8rem; }
+            .stack-tile { width: 65px; height: 85px; font-size: 1.6rem; margin-bottom: -50px; }
+            .mahjong-grid.stack-mode { gap: 15px; }
+            .info-panel { flex-direction: column; align-items: stretch; text-align: center; }
+            .timer { font-size: 1.3rem; text-align: center; }
+            .btn, .btn-small { padding: 6px 12px; font-size: 0.8rem; }
+            .modal-content { padding: 20px; min-width: 260px; }
+            .modal-content input { font-size: 1.2rem; }
+            .level-card { width: 140px; padding: 12px; }
         }
         @media (max-width: 480px) {
-            .tile, .stack-tile {
-                width: 55px;
-                height: 66px;
-                font-size: 1.3rem;
-            }
-            .stack-tile {
-                margin-bottom: -40px;
-            }
-            .modal-content input {
-                font-size: 1rem;
-            }
+            .stack-tile { width: 55px; height: 75px; font-size: 1.3rem; margin-bottom: -40px; }
+            .tile { width: 60px; height: 80px; font-size: 1.5rem; }
+            .sentence-row { font-size: 0.95rem; }
+        }
+        .btn-small {
+            background: #2dd4bf;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 40px;
+            color: #0f172a;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -339,13 +352,13 @@
             <button class="btn" id="registerBtn">Регистрация</button>
             <button class="btn" id="loginBtn">Вход</button>
             <button class="btn btn-warning" id="guestBtn">Гость</button>
-            <p id="authMsg"></p>
+            <p id="authMsg" style="color:#f1f5f9;"></p>
         </div>
     </div>
 
     <div id="tab-menu" class="tab-content">
-        <h2>Выберите уровень HSK</h2>
-        <div id="levelSelector" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;"></div>
+        <h2 style="color:#e2e8f0;">Выберите уровень HSK</h2>
+        <div id="levelSelector" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;"></div>
         <div id="levelDetailPanel" class="submenu hidden"></div>
     </div>
 
@@ -354,7 +367,7 @@
             <div>❤️ Жизни: <span id="livesCount">5</span></div>
             <div class="timer">⏱️ <span id="timerDisplay">0.0</span> сек</div>
             <button class="btn" id="pauseBtn">⏸ Пауза</button>
-            <div>💡 Подсказки: <span id="hintsLeft">3</span> <button id="shuffleBtn" class="btn">🃏 Перемешать</button></div>
+            <div>💡 Подсказки: <span id="hintsLeft">3</span> <button id="shuffleBtn" class="btn-small">🃏 Перемешать</button></div>
         </div>
         <div class="game-area">
             <div class="sentence-row" id="sentenceText">Загрузка...</div>
@@ -363,7 +376,7 @@
     </div>
 
     <div id="tab-progress" class="tab-content">
-        <h2>🏆 Статистика</h2>
+        <h2 style="color:#e2e8f0;">🏆 Статистика</h2>
         <div id="progressList"></div>
     </div>
 </div>
@@ -373,7 +386,7 @@
 </div>
 
 <script>
-    // ---------- ДАННЫЕ HSK 1-3 (те же) ----------
+    // ---------- ДАННЫЕ HSK 1-3 (те же, что и раньше) ----------
     const HSK1_LEVELS = [
         { text: "你好吗", tiles: [{char:"你",pinyin:"ni"},{char:"好",pinyin:"hao"},{char:"吗",pinyin:"ma"}] },
         { text: "我爱中国", tiles: [{char:"我",pinyin:"wo"},{char:"爱",pinyin:"ai"},{char:"中",pinyin:"zhong"},{char:"国",pinyin:"guo"}] },
@@ -385,32 +398,28 @@
         { text: "谢谢老师", tiles: [{char:"谢",pinyin:"xie"},{char:"老",pinyin:"lao"},{char:"师",pinyin:"shi"}] },
         { text: "名字是什么", tiles: [{char:"名",pinyin:"ming"},{char:"字",pinyin:"zi"},{char:"是",pinyin:"shi"},{char:"什",pinyin:"shen"},{char:"么",pinyin:"me"}] }
     ];
-    
     const HSK2_LEVELS = [
         { text: "机场很大，坐飞机很快", tiles: [{char:"机",pinyin:"ji"},{char:"场",pinyin:"chang"},{char:"很",pinyin:"hen"},{char:"大",pinyin:"da"},{char:"坐",pinyin:"zuo"},{char:"飞",pinyin:"fei"},{char:"机",pinyin:"ji"},{char:"快",pinyin:"kuai"}] },
         { text: "考试复习很累，但是要努力", tiles: [{char:"考",pinyin:"kao"},{char:"试",pinyin:"shi"},{char:"复",pinyin:"fu"},{char:"习",pinyin:"xi"},{char:"累",pinyin:"lei"},{char:"但",pinyin:"dan"},{char:"是",pinyin:"shi"},{char:"要",pinyin:"yao"},{char:"努",pinyin:"nu"},{char:"力",pinyin:"li"}] },
         { text: "商店开门了，我们进去买东西吧", tiles: [{char:"商",pinyin:"shang"},{char:"店",pinyin:"dian"},{char:"开",pinyin:"kai"},{char:"门",pinyin:"men"},{char:"了",pinyin:"le"},{char:"我",pinyin:"wo"},{char:"们",pinyin:"men"},{char:"进",pinyin:"jin"},{char:"去",pinyin:"qu"},{char:"买",pinyin:"mai"},{char:"东",pinyin:"dong"},{char:"西",pinyin:"xi"}] }
     ];
-    
     const HSK3_LEVELS = [
         { text: "虽然天气很冷，但是我还是想去外面跑步", tiles: [{char:"虽",pinyin:"sui"},{char:"然",pinyin:"ran"},{char:"天",pinyin:"tian"},{char:"气",pinyin:"qi"},{char:"很",pinyin:"hen"},{char:"冷",pinyin:"leng"},{char:"但",pinyin:"dan"},{char:"是",pinyin:"shi"},{char:"我",pinyin:"wo"},{char:"还",pinyin:"hai"},{char:"是",pinyin:"shi"},{char:"想",pinyin:"xiang"},{char:"去",pinyin:"qu"},{char:"外",pinyin:"wai"},{char:"面",pinyin:"mian"},{char:"跑",pinyin:"pao"},{char:"步",pinyin:"bu"}] },
         { text: "这个问题特别简单，你只要认真思考就能找到答案", tiles: [{char:"这",pinyin:"zhe"},{char:"个",pinyin:"ge"},{char:"问",pinyin:"wen"},{char:"题",pinyin:"ti"},{char:"特",pinyin:"te"},{char:"别",pinyin:"bie"},{char:"简",pinyin:"jian"},{char:"单",pinyin:"dan"},{char:"你",pinyin:"ni"},{char:"只",pinyin:"zhi"},{char:"要",pinyin:"yao"},{char:"认",pinyin:"ren"},{char:"真",pinyin:"zhen"},{char:"思",pinyin:"si"},{char:"考",pinyin:"kao"},{char:"就",pinyin:"jiu"},{char:"能",pinyin:"neng"},{char:"找",pinyin:"zhao"},{char:"到",pinyin:"dao"},{char:"答",pinyin:"da"},{char:"案",pinyin:"an"}] }
     ];
     
-    function generateSubLevels(baseArray, total = 100) {
-        let result = [];
-        for (let i = 0; i < total; i++) {
-            let original = baseArray[i % baseArray.length];
-            let tilesCopy = original.tiles.map(t => ({ ...t }));
-            result.push({ text: original.text, tiles: tilesCopy });
+    function generateSubLevels(baseArray, total=100) {
+        let res = [];
+        for(let i=0;i<total;i++) {
+            let orig = baseArray[i % baseArray.length];
+            res.push({ text: orig.text, tiles: orig.tiles.map(t=>({...t})) });
         }
-        return result;
+        return res;
     }
-    
     const levelPools = {
-        easy: { name: "HSK 1 (короткие фразы)", subLevels: generateSubLevels(HSK1_LEVELS, 100), optimalTime: 30 },
-        medium: { name: "HSK 2 (средние фразы)", subLevels: generateSubLevels(HSK2_LEVELS, 100), optimalTime: 50 },
-        hard: { name: "HSK 3 (длинные тексты)", subLevels: generateSubLevels(HSK3_LEVELS, 100), optimalTime: 70 }
+        easy: { name:"HSK 1", subLevels: generateSubLevels(HSK1_LEVELS,100), optimalTime:30 },
+        medium: { name:"HSK 2", subLevels: generateSubLevels(HSK2_LEVELS,100), optimalTime:50 },
+        hard: { name:"HSK 3", subLevels: generateSubLevels(HSK3_LEVELS,100), optimalTime:70 }
     };
     
     // ----- ПОЛЬЗОВАТЕЛИ -----
@@ -418,175 +427,129 @@
     function loadUsers() { let d = localStorage.getItem("pinyin_users"); users = d ? JSON.parse(d) : []; }
     function saveUsers() { localStorage.setItem("pinyin_users", JSON.stringify(users)); }
     function saveCurrentUser() { if(currentUser && !currentUser.isGuest) localStorage.setItem("pinyin_current", JSON.stringify({login: currentUser.login})); else localStorage.removeItem("pinyin_current"); }
-    function loadCurrentUser() { let raw = localStorage.getItem("pinyin_current"); if(raw) { let {login} = JSON.parse(raw); let found = users.find(u=>u.login===login); if(found) { currentUser=found; currentUser.isGuest=false; return true; } } currentUser=null; return false; }
+    function loadCurrentUser() { let raw = localStorage.getItem("pinyin_current"); if(raw) { let {login}=JSON.parse(raw); let found=users.find(u=>u.login===login); if(found) { currentUser=found; currentUser.isGuest=false; return true; } } currentUser=null; return false; }
     function initProgress() { return { easy:{completed:[],bestTimes:{},lastUnlocked:1}, medium:{completed:[],bestTimes:{},lastUnlocked:1}, hard:{completed:[],bestTimes:{},lastUnlocked:1} }; }
-    function createUser(login, pass, isGuest=false) { return { login, password: pass, isGuest, progress: initProgress() }; }
+    function createUser(login,pass,isGuest=false) { return { login, password:pass, isGuest, progress: initProgress() }; }
     
-    // ----- ИГРОВАЯ МЕХАНИКА -----
-    let selectedTileId = null;
-    let currentModal = null;
-    let currentTileMode = "flat";
-    
+    // ----- ИГРОВАЯ ЛОГИКА -----
+    let selectedTileId = null, currentModal = null, currentTileMode = "flat";
     function shuffleArray(arr) { for(let i=arr.length-1;i>0;i--) { let j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
     function normalizePinyin(s) { return s.toLowerCase().replace(/[^a-z]/g,''); }
-    
     function buildStacks(tiles) {
-        let stacks = [];
-        let remaining = tiles.filter(t => !t.removed);
-        let colSize = 4;
-        for (let i = 0; i < remaining.length; i += colSize) {
-            let stack = remaining.slice(i, i + colSize);
-            stacks.push(stack);
-        }
+        let stacks = [], remaining = tiles.filter(t=>!t.removed);
+        for(let i=0;i<remaining.length;i+=4) stacks.push(remaining.slice(i,i+4));
         return stacks;
     }
-    
     function renderTiles(tiles) {
         let container = document.getElementById('mahjongGrid');
         container.innerHTML = '';
-        if (currentTileMode === "flat") {
+        if(currentTileMode === "flat") {
             container.classList.remove('stack-mode');
             tiles.forEach((tile, idx) => {
-                if (tile.removed) return;
+                if(tile.removed) return;
                 let div = document.createElement('div');
                 div.className = 'tile';
-                div.innerHTML = `<span>${tile.char}</span>`;
-                div.onclick = () => { if(currentGame?.isActive) { selectedTileId = idx; showPinyinModal(tile.char, tile.pinyin); } };
+                div.innerText = tile.char;
+                div.onclick = () => { if(currentGame?.isActive) { selectedTileId=idx; showPinyinModal(tile.char, tile.pinyin); } };
                 container.appendChild(div);
             });
         } else {
             container.classList.add('stack-mode');
             let stacks = buildStacks(tiles);
-            container.style.display = 'flex';
-            container.style.flexWrap = 'wrap';
-            container.style.justifyContent = 'center';
-            container.style.gap = '20px';
-            for (let colIdx = 0; colIdx < stacks.length; colIdx++) {
-                let stack = stacks[colIdx];
+            for(let col=0; col<stacks.length; col++) {
+                let stack = stacks[col];
                 let colDiv = document.createElement('div');
                 colDiv.className = 'stack-col';
-                for (let rowIdx = 0; rowIdx < stack.length; rowIdx++) {
-                    let tile = stack[rowIdx];
+                for(let row=0; row<stack.length; row++) {
+                    let tile = stack[row];
                     let div = document.createElement('div');
                     div.className = 'stack-tile';
-                    div.innerHTML = `<span>${tile.char}</span>`;
-                    let isTop = (rowIdx === stack.length - 1);
-                    if (!isTop) div.classList.add('blocked');
-                    div.style.zIndex = rowIdx + 1;
-                    div.onclick = (function(col, row, t) {
-                        return function() {
-                            if(!currentGame?.isActive) return;
-                            let currentStacks = buildStacks(currentGame.currentTiles);
-                            let currentStack = currentStacks[col];
-                            if(!currentStack) return;
-                            let currentTopIndex = currentStack.length - 1;
-                            if (row === currentTopIndex && !t.removed && !div.classList.contains('blocked')) {
-                                selectedTileId = {col: col, row: row, tile: t};
-                                showPinyinModal(t.char, t.pinyin);
-                            } else {
-                                alert("🔒 Эта плитка закрыта! Сначала уберите верхнюю.");
-                            }
-                        };
-                    })(colIdx, rowIdx, tile);
+                    div.innerText = tile.char;
+                    let isTop = (row === stack.length-1);
+                    if(!isTop) div.classList.add('blocked');
+                    div.onclick = (function(c,r,t) { return function() {
+                        if(!currentGame?.isActive) return;
+                        let curStacks = buildStacks(currentGame.currentTiles);
+                        if(!curStacks[c] || r !== curStacks[c].length-1 || t.removed) { alert("🔒 Закрыто!"); return; }
+                        selectedTileId = {col:c, row:r, tile:t};
+                        showPinyinModal(t.char, t.pinyin);
+                    }; })(col, row, tile);
                     colDiv.appendChild(div);
                 }
                 container.appendChild(colDiv);
             }
         }
     }
-    
     function removeTileFromStacks(tileId) {
-        if (currentTileMode === "flat") {
-            if (typeof tileId === 'number') {
-                currentGame.currentTiles[tileId].removed = true;
-            }
-        } else {
-            let {col, row, tile} = tileId;
-            let stacks = buildStacks(currentGame.currentTiles);
-            if (stacks[col] && stacks[col][row] && stacks[col][row].char === tile.char) {
-                let originalTile = currentGame.currentTiles.find(t => t.char === tile.char && !t.removed);
-                if (originalTile) originalTile.removed = true;
-            }
+        if(currentTileMode === "flat") currentGame.currentTiles[tileId].removed = true;
+        else {
+            let {col,row,tile}=tileId;
+            let original = currentGame.currentTiles.find(t=>t.char===tile.char && !t.removed);
+            if(original) original.removed = true;
         }
         currentGame.tilesRemaining--;
     }
-    
     function showPinyinModal(char, correctPinyin) {
-        if (currentModal) return;
-        let correctNorm = normalizePinyin(correctPinyin);
+        if(currentModal) return;
+        let correct = normalizePinyin(correctPinyin);
         let modalDiv = document.createElement('div');
         modalDiv.className = 'modal';
-        modalDiv.innerHTML = `<div class="modal-content">
-            <h3>Иероглиф: ${char}</h3>
-            <input type="text" id="pinyinInput" placeholder="введите пиньинь (например: da)" autocomplete="off">
-            <div>
-                <button class="btn" id="modalSubmitBtn">✅ Проверить</button>
-                <button class="btn btn-warning" id="modalHintBtn">💡 Подсказка (${currentGame.hints})</button>
-                <button class="btn btn-danger" id="modalCancelBtn">Отмена</button>
-            </div>
-        </div>`;
+        modalDiv.innerHTML = `<div class="modal-content"><h3>Иероглиф: ${char}</h3><input id="pinyinInput" placeholder="пиньинь без тонов" autocomplete="off"><div><button class="btn" id="modalSubmitBtn">✅ Проверить</button><button class="btn btn-warning" id="modalHintBtn">💡 Подсказка (${currentGame.hints})</button><button class="btn btn-danger" id="modalCancelBtn">Отмена</button></div></div>`;
         document.body.appendChild(modalDiv);
         currentModal = modalDiv;
         let input = modalDiv.querySelector('#pinyinInput');
         input.focus();
         let submit = () => {
-            let userAns = normalizePinyin(input.value);
-            if (userAns === correctNorm) {
+            let ans = normalizePinyin(input.value);
+            if(ans === correct) {
                 removeTileFromStacks(selectedTileId);
                 document.getElementById('livesCount').innerText = currentGame.lives;
                 renderTiles(currentGame.currentTiles);
-                if (currentGame.tilesRemaining === 0) levelComplete();
+                if(currentGame.tilesRemaining === 0) levelComplete();
                 closeModal();
             } else {
                 currentGame.lives--;
                 document.getElementById('livesCount').innerText = currentGame.lives;
-                if (currentGame.lives <= 0) { closeModal(); gameOver(); }
-                else { alert(`❌ Неверно! Правильный пиньинь: ${correctNorm}. Осталось жизней: ${currentGame.lives}`); closeModal(); }
+                if(currentGame.lives <= 0) { closeModal(); gameOver(); }
+                else { alert(`❌ Неверно! Правильно: ${correct}. Осталось жизней: ${currentGame.lives}`); closeModal(); }
             }
         };
         modalDiv.querySelector('#modalSubmitBtn').onclick = submit;
         modalDiv.querySelector('#modalHintBtn').onclick = () => {
-            if (currentGame.hints > 0) { currentGame.hints--; document.getElementById('hintsLeft').innerText = currentGame.hints; alert(`Подсказка: ${char} → ${correctNorm}`); }
-            else alert("Подсказки кончились!");
+            if(currentGame.hints>0) { currentGame.hints--; document.getElementById('hintsLeft').innerText=currentGame.hints; alert(`Подсказка: ${char} → ${correct}`); }
+            else alert("Нет подсказок");
         };
-        modalDiv.querySelector('#modalCancelBtn').onclick = () => closeModal();
-        input.addEventListener('keypress', e => { if(e.key === 'Enter') submit(); });
+        modalDiv.querySelector('#modalCancelBtn').onclick = closeModal;
+        input.addEventListener('keypress', e=>{ if(e.key==='Enter') submit(); });
     }
     function closeModal() { if(currentModal) { currentModal.remove(); currentModal=null; } }
-    
-    function startTimer() { if(currentGame.timerInterval) clearInterval(currentGame.timerInterval); currentGame.startTime=Date.now(); currentGame.timerInterval = setInterval(()=>{ if(currentGame?.isActive && !isPaused) document.getElementById('timerDisplay').innerText = ((Date.now()-currentGame.startTime)/1000).toFixed(1); },100); }
+    function startTimer() { if(currentGame.timerInterval) clearInterval(currentGame.timerInterval); currentGame.startTime=Date.now(); currentGame.timerInterval=setInterval(()=>{ if(currentGame?.isActive && !isPaused) document.getElementById('timerDisplay').innerText=((Date.now()-currentGame.startTime)/1000).toFixed(1); },100); }
     function stopTimer() { if(currentGame?.timerInterval) clearInterval(currentGame.timerInterval); }
-    
     function levelComplete() {
         stopTimer(); let elapsed = (Date.now()-currentGame.startTime)/1000;
         if(currentUser && !currentUser.isGuest) {
             let prog = currentUser.progress[currentGame.difficulty];
-            let lvlNum = currentGame.levelIndex+1;
-            if(!prog.completed.includes(lvlNum)) { prog.completed.push(lvlNum); prog.bestTimes[lvlNum]=elapsed; if(lvlNum===prog.lastUnlocked && lvlNum<100) prog.lastUnlocked++; }
-            else if(prog.bestTimes[lvlNum] > elapsed) prog.bestTimes[lvlNum] = elapsed;
+            let lvl = currentGame.levelIndex+1;
+            if(!prog.completed.includes(lvl)) { prog.completed.push(lvl); prog.bestTimes[lvl]=elapsed; if(lvl===prog.lastUnlocked && lvl<100) prog.lastUnlocked++; }
+            else if(prog.bestTimes[lvl] > elapsed) prog.bestTimes[lvl]=elapsed;
             saveUsers(); saveCurrentUser();
         }
-        currentGame.isActive = false;
-        showChoiceDialog(elapsed);
-    }
-    function gameOver() { stopTimer(); alert("💀 Жизни кончились. Уровень перезапускается."); startLevel(currentGame.difficulty, currentGame.levelIndex, currentTileMode); }
-    
-    function showChoiceDialog(elapsed) {
-        let div = document.createElement('div'); div.className = 'choice-dialog';
-        div.innerHTML = `<div class="choice-card"><h2>🎉 Уровень пройден!</h2><p>Время: ${elapsed.toFixed(1)} сек</p><div><button class="btn" id="nextLvlBtn">➡️ Следующий уровень</button><button class="btn btn-warning" id="menuBtn">🏠 В главное меню</button></div></div>`;
+        currentGame.isActive=false;
+        let div = document.createElement('div'); div.className='choice-dialog';
+        div.innerHTML=`<div class="choice-card"><h2>🎉 Уровень пройден!</h2><p>Время: ${elapsed.toFixed(1)} сек</p><div><button class="btn" id="nextLvlBtn">➡️ Следующий</button><button class="btn btn-warning" id="menuBtn">🏠 Меню</button></div></div>`;
         document.body.appendChild(div);
-        div.querySelector('#nextLvlBtn').onclick = () => { div.remove(); let nxt = getNextUnlockedLevel(currentGame.difficulty); if(nxt) startLevel(currentGame.difficulty, nxt-1, currentTileMode); else alert("Все уровни пройдены!"); };
-        div.querySelector('#menuBtn').onclick = () => { div.remove(); switchTab('menu'); };
+        div.querySelector('#nextLvlBtn').onclick = ()=>{ div.remove(); let nxt = getNextUnlockedLevel(currentGame.difficulty); if(nxt) startLevel(currentGame.difficulty, nxt-1, currentTileMode); else alert("Все уровни пройдены!"); };
+        div.querySelector('#menuBtn').onclick = ()=>{ div.remove(); switchTab('menu'); };
     }
-    
-    function startLevel(difficulty, index, mode) {
+    function gameOver() { stopTimer(); alert("💀 Жизни кончились. Перезапуск."); startLevel(currentGame.difficulty, currentGame.levelIndex, currentTileMode); }
+    function startLevel(diff, idx, mode) {
         if(currentGame?.timerInterval) stopTimer();
-        currentTileMode = mode;
-        let levelData = levelPools[difficulty].subLevels[index];
-        let tiles = levelData.tiles.map(t=>({char:t.char, pinyin:t.pinyin, removed:false}));
+        currentTileMode=mode;
+        let data = levelPools[diff].subLevels[idx];
+        let tiles = data.tiles.map(t=>({...t, removed:false}));
         tiles = shuffleArray(tiles);
-        currentGame = { difficulty, levelIndex: index, currentTiles: tiles, tilesRemaining: tiles.length, lives:5, hints:3, startTime:null, timerInterval:null, isActive:true };
-        document.getElementById('sentenceText').innerText = levelData.text;
+        currentGame = { difficulty:diff, levelIndex:idx, currentTiles:tiles, tilesRemaining:tiles.length, lives:5, hints:3, isActive:true };
+        document.getElementById('sentenceText').innerText = data.text;
         document.getElementById('livesCount').innerText = 5;
         document.getElementById('hintsLeft').innerText = 3;
         renderTiles(tiles);
@@ -602,35 +565,27 @@
         document.getElementById(`tab-${tabId}`).classList.add('active');
         document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
         document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
-        if(tabId === 'menu') renderLevelMenu();
-        if(tabId === 'progress') renderProgress();
+        if(tabId==='menu') renderLevelMenu();
+        if(tabId==='progress') renderProgress();
     }
-    
     function renderLevelMenu() {
         let container = document.getElementById('levelSelector');
         container.innerHTML = `<div class="level-card" data-diff="easy">🌱 HSK 1</div><div class="level-card" data-diff="medium">🌿 HSK 2</div><div class="level-card" data-diff="hard">🍃 HSK 3</div>`;
         document.querySelectorAll('.level-card').forEach(c=>c.addEventListener('click',()=>showLevelDetail(c.dataset.diff)));
     }
-    
     function showLevelDetail(diff) {
         let panel = document.getElementById('levelDetailPanel');
-        if(!currentUser) { alert("Войдите или играйте как гость"); return; }
+        if(!currentUser) { alert("Войдите или гость"); return; }
         let prog = currentUser.progress[diff];
-        panel.innerHTML = `
-            <h3>${levelPools[diff].name}</h3>
-            <div class="mode-selector">
-                <label><input type="radio" name="startMode" value="flat" checked> 🃏 Обычный</label>
-                <label><input type="radio" name="startMode" value="stack"> 🀄️ Маджонг (стопки)</label>
-            </div>
-            <button class="btn" id="startNextBtn">▶ Следующий доступный</button>
-            <div id="gamesList"></div>
-        `;
+        panel.innerHTML = `<h3 style="color:#e2e8f0;">${levelPools[diff].name}</h3>
+            <div class="mode-selector"><label><input type="radio" name="startMode" value="flat" checked> 🃏 Обычный</label><label><input type="radio" name="startMode" value="stack"> 🀄️ Маджонг</label></div>
+            <button class="btn" id="startNextBtn">▶ Следующий доступный</button><div id="gamesList"></div>`;
         panel.classList.remove('hidden');
         document.getElementById('startNextBtn').onclick = () => {
             let mode = document.querySelector('input[name="startMode"]:checked').value;
             let nxt = getNextUnlockedLevel(diff);
             if(nxt) { switchTab('game'); startLevel(diff, nxt-1, mode); }
-            else alert("Все уровни пройдены!");
+            else alert("Все пройдены");
         };
         let listDiv = document.getElementById('gamesList');
         listDiv.innerHTML = "";
@@ -638,27 +593,55 @@
             let completed = prog.completed.includes(i);
             let best = prog.bestTimes[i]?prog.bestTimes[i].toFixed(1):"—";
             let unlocked = i<=prog.lastUnlocked;
-            listDiv.innerHTML += `<div class="game-list-item"><span>Уровень ${i} ${completed?'✅':''} ${unlocked?'🔓':'🔒'}</span><span>🏆 ${best} сек</span>${unlocked?`<button class="btn play-lvl" data-lvl="${i}">Играть</button>`:''}</div>`;
+            listDiv.innerHTML += `<div class="game-list-item"><span>Уровень ${i} ${completed?'✅':''} ${unlocked?'🔓':'🔒'}</span><span>🏆 ${best} сек</span>${unlocked?`<button class="btn-small play-lvl" data-lvl="${i}">Играть</button>`:''}</div>`;
         }
         document.querySelectorAll('.play-lvl').forEach(btn=>btn.addEventListener('click',e=>{
             let lvl = parseInt(btn.dataset.lvl);
             let mode = document.querySelector('input[name="startMode"]:checked').value;
-            switchTab('game');
-            startLevel(diff, lvl-1, mode);
+            switchTab('game'); startLevel(diff, lvl-1, mode);
         }));
     }
-    
-    function renderProgress() { if(!currentUser) { document.getElementById('progressList').innerHTML="<p>Войдите в аккаунт</p>"; return; } let html=""; for(let d of ['easy','medium','hard']) { let p=currentUser.progress[d]; html+=`<div><h3>${levelPools[d].name}</h3><p>Пройдено: ${p.completed.length}/100</p><ul>${p.completed.slice(0,20).map(i=>`<li>Уровень ${i} — ${p.bestTimes[i]?.toFixed(1)} сек</li>`).join('')}${p.completed.length>20?'<li>...</li>':''}</ul></div>`; } document.getElementById('progressList').innerHTML=html; }
-    
+    function renderProgress() {
+        if(!currentUser) { document.getElementById('progressList').innerHTML="<p style='color:#e2e8f0;'>Войдите в аккаунт</p>"; return; }
+        let html = "";
+        for(let d of ['easy','medium','hard']) {
+            let p = currentUser.progress[d];
+            html += `<div style="background:#1e293b; border-radius:32px; padding:16px; margin-bottom:16px;"><h3 style="color:#e2e8f0;">${levelPools[d].name}</h3><p style="color:#cbd5e1;">Пройдено: ${p.completed.length}/100</p><ul style="color:#94a3b8;">${p.completed.slice(0,20).map(i=>`<li>Уровень ${i} — ${p.bestTimes[i]?.toFixed(1)} сек</li>`).join('')}${p.completed.length>20?'<li>...</li>':''}</ul></div>`;
+        }
+        document.getElementById('progressList').innerHTML = html;
+    }
     function pauseGame() { if(!currentGame?.isActive) return; isPaused=true; stopTimer(); document.getElementById('pauseModal').classList.remove('hidden'); }
     function resumeGame() { isPaused=false; if(currentGame?.isActive) startTimer(); document.getElementById('pauseModal').classList.add('hidden'); }
     function quitToMenu() { if(currentGame?.timerInterval) stopTimer(); currentGame=null; isPaused=false; document.getElementById('pauseModal').classList.add('hidden'); switchTab('menu'); }
     
-    // Обработчики
-    document.getElementById('registerBtn').onclick = () => { let login=document.getElementById('loginInput').value.trim(), pass=document.getElementById('passInput').value; if(!login||pass.length<3) { document.getElementById('authMsg').innerText="Логин и пароль (мин 3)"; return; } if(users.find(u=>u.login===login)) { document.getElementById('authMsg').innerText="Логин занят"; return; } let newUser=createUser(login,pass,false); users.push(newUser); saveUsers(); currentUser=newUser; saveCurrentUser(); switchTab('menu'); };
-    document.getElementById('loginBtn').onclick = () => { let login=document.getElementById('loginInput').value.trim(), pass=document.getElementById('passInput').value; let user=users.find(u=>u.login===login && u.password===pass); if(user) { currentUser=user; currentUser.isGuest=false; saveCurrentUser(); switchTab('menu'); } else document.getElementById('authMsg').innerText="Неверный логин или пароль"; };
-    document.getElementById('guestBtn').onclick = () => { currentUser=createUser("guest_"+Date.now(),"",true); currentUser.isGuest=true; saveCurrentUser(); switchTab('menu'); };
-    document.getElementById('shuffleBtn').onclick = () => { if(currentGame?.isActive) { let visible=currentGame.currentTiles.filter(t=>!t.removed); let removed=currentGame.currentTiles.filter(t=>t.removed); currentGame.currentTiles=shuffleArray([...visible,...removed]); renderTiles(currentGame.currentTiles); } };
+    // обработчики кнопок
+    document.getElementById('registerBtn').onclick = () => {
+        let login = document.getElementById('loginInput').value.trim();
+        let pass = document.getElementById('passInput').value;
+        if(!login || pass.length<3) { document.getElementById('authMsg').innerText="Логин и пароль (мин 3)"; return; }
+        if(users.find(u=>u.login===login)) { document.getElementById('authMsg').innerText="Логин занят"; return; }
+        let newUser = createUser(login,pass,false);
+        users.push(newUser); saveUsers(); currentUser=newUser; saveCurrentUser(); switchTab('menu');
+    };
+    document.getElementById('loginBtn').onclick = () => {
+        let login = document.getElementById('loginInput').value.trim();
+        let pass = document.getElementById('passInput').value;
+        let user = users.find(u=>u.login===login && u.password===pass);
+        if(user) { currentUser=user; currentUser.isGuest=false; saveCurrentUser(); switchTab('menu'); }
+        else document.getElementById('authMsg').innerText="Неверный логин/пароль";
+    };
+    document.getElementById('guestBtn').onclick = () => {
+        currentUser = createUser("guest_"+Date.now(),"",true);
+        currentUser.isGuest=true; saveCurrentUser(); switchTab('menu');
+    };
+    document.getElementById('shuffleBtn').onclick = () => {
+        if(currentGame?.isActive) {
+            let visible = currentGame.currentTiles.filter(t=>!t.removed);
+            let removed = currentGame.currentTiles.filter(t=>t.removed);
+            currentGame.currentTiles = shuffleArray([...visible, ...removed]);
+            renderTiles(currentGame.currentTiles);
+        }
+    };
     document.getElementById('pauseBtn').onclick = pauseGame;
     document.getElementById('resumeBtn').onclick = resumeGame;
     document.getElementById('quitGameBtn').onclick = quitToMenu;
